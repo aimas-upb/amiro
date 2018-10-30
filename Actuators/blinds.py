@@ -1,7 +1,6 @@
 import rospy
 from std_msgs.msg import String
-
-import RPi.GPIO as GPIO           # import RPi.GPIO module
+import RPi.GPIO as GPIO
 import json
 
 
@@ -16,10 +15,10 @@ class BlindsNode:
 		self.gpio_down = gpio_config['blinds']['down']
 
 		for gpio in self.gpio_down + self.gpio_up:
-			GPIO.setup(gpio, GPIO.OUT, pull_up_down=GPIO.PUD_UP)
+			GPIO.setup(gpio, GPIO.OUT, initial=1)
 
 	def listener(self):
-		rospy.init_node('rpi1', anonymous=True)
+		rospy.init_node('rpi_1', anonymous=True)
 
 		rospy.Subscriber("blinds", String, self.on_blinds_msg)
 
@@ -36,13 +35,13 @@ class BlindsNode:
 
 		if command['blinds'] == -1:
 			for gpio in self.gpio_down:
-				GPIO.output(gpio, 1)
+				GPIO.output(gpio, 0)
 		elif command['blinds'] == 1:
 			for gpio in self.gpio_up:
-				GPIO.output(gpio, 1)
+				GPIO.output(gpio, 0)
 		else:
 			for gpio in self.gpio_up + self.gpio_down:
-				GPIO.output(gpio, 0)
+				GPIO.output(gpio, 1)
 
 bnode = BlindsNode()
 bnode.listener()
