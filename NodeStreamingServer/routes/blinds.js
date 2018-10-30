@@ -19,16 +19,14 @@ router.post('/', function(req, res) {
                 // Requires the std_msgs message package
                 var std_msgs = rosnodejs.require('std_msgs').msg;
 
-                rosnodejs.initNode('/rpi1_node')
-                    .then((rosNode) => {
+                var rosNode = rosnodejs.nh;
 
-                    const pub = rosNode.advertise('/blinds_' + req.body.id, 'std_msgs/Int32');
-                    const msg = new std_msgs.msg.Int32x4();
-                    msg.data = req.body.command;
-                    pub.publish(msg);
+                const pub = rosNode.advertise('/blinds_' + req.body.id, 'std_msgs/Int32');
+                const msg = new std_msgs.msg.Int32x4();
+                msg.data = req.body.command;
+                pub.publish(msg);
 
-                    res.send("ok");
-                });
+                res.send("ok");
 
 
             }
