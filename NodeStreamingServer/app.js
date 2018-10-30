@@ -20,6 +20,7 @@ app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 app.use('/video.mjpg', require('./routes/videostreamforwarding'));
 app.use('/auxiliary/doorsensor', require('./routes/doorsensor'));
+app.use('/actuators/blinds', require('./routes/blinds'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
