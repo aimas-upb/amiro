@@ -12,6 +12,9 @@ class BlindsNode:
 		self.gpio_up = gpio_up
 		self.gpio_down = gpio_down
 
+		GPIO.setup(gpio_up, GPIO.OUT, initial=1)
+		GPIO.setup(gpio_down, GPIO.OUT, initial=1)
+
 	def listen(self):
 		rospy.Subscriber(self.topic_name, Int32, self.on_blinds_msg)
 
