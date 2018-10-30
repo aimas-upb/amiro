@@ -39,3 +39,6 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+const rosnodejs = require('rosnodejs');
+rosnodejs.initNode('/rpi1_node');
+

@@ -20,11 +20,10 @@ router.post('/', function(req, res) {
                 var std_msgs = rosnodejs.require('std_msgs').msg;
 
                 var rosNode = rosnodejs.nh;
-
+		if(!rosNode._node)
+			res.send("Cannot Communicate with ROS MASTER")
                 const pub = rosNode.advertise('/blinds_' + req.body.id, 'std_msgs/Int32');
-                const msg = new std_msgs.msg.Int32x4();
-                msg.data = req.body.command;
-                pub.publish(msg);
+                pub.publish({data:Number(req.body.command)});
 
                 res.send("ok");
 
