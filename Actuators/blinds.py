@@ -1,47 +1,36 @@
 import rospy
-from std_msgs.msg import String
+from std_msgs.msg import Int32
 import RPi.GPIO as GPIO
 import json
 
 
 class BlindsNode:
-	def __init__(self):
+	def __init__(self, topic_name, gpio_up, gpio_down):
 		GPIO.setmode(GPIO.BCM)  # choose BCM or BOARD
-
-		with open('blinds_config.json') as json_data_file:
-			gpio_config = json.load(json_data_file)
-
-		self.gpio_up = gpio_config['blinds']['up']
-		self.gpio_down = gpio_config['blinds']['down']
-
-		for gpio in self.gpio_down + self.gpio_up:
-			GPIO.setup(gpio, GPIO.OUT, initial=1)
-
-	def listener(self):
 		rospy.init_node('rpi_1', anonymous=True)
+		self.topic_name = topic_name
+		self.gpio_up = gpio_up
+		self.gpio_down = gpio_down
 
-		rospy.Subscriber("blinds", String, self.on_blinds_msg)
-
-		# spin() simply keeps python from exiting until this node is stopped
-		rospy.spin()
+	def listen(self):
+		rospy.Subscriber(self.topic_name, Int32, self.on_blinds_msg)
 
 	def on_blinds_msg(self, data):
 		rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
-		command = json.loads(data.data)
 
-		if not 'blinds' in command:
-			rospy.loginfo("Wrong command")
-			return
-
-		if command['blinds'] == -1:
-			for gpio in self.gpio_down:
-				GPIO.output(gpio, 0)
-		elif command['blinds'] == 1:
-			for gpio in self.gpio_up:
-				GPIO.output(gpio, 0)
+		if data.data == -1:
+			GPIO.output(self.gpio_down, 0)
+		elif data.data == 1:
+			GPIO.output(self.gpio_up, 0)
 		else:
-			for gpio in self.gpio_up + self.gpio_down:
-				GPIO.output(gpio, 1)
+			GPIO.output(self.gpio_down, 1)
+			GPIO.output(self.gpio_up, 1)
 
-bnode = BlindsNode()
-bnode.listener()
+with open('blinds_config.json') as json_data_file:
+	gpio_config = json.load(json_data_file)
+
+for key in gpio_config:
+	bnode = BlindsNode(key, gpio_config[key]['up'], gpio_config[key]['down'])
+	bnode.listen()
+
+rospy.spin()
