@@ -21,7 +21,9 @@ router.post('/', function(req, res) {
 
                 const nh = rosnodejs.nh;
                 const pub = nh.advertise('/blinds_' + req.body.id, 'std_msgs/Int32');
-                pub.publish({ data: req.body.command });
+                const msg = new std_msgs.msg.Int32x4();
+                msg.data = req.body.command;
+                pub.publish(msg);
 
                 res.send("ok");
             }
