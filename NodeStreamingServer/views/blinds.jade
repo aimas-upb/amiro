@@ -3,7 +3,7 @@ extends layout
 block content
     h1= Control
         div(class='grid')
-            div(class='tile' data-cls-title="title-text bg-black fg-white" data-role="panel" data-draggable="false" data-title-caption="Blinds" data-collapsed="false" data-collapsible="false")
+            div(data-cls-title="title-text bg-black fg-white" data-role="panel" data-draggable="false" data-title-caption="Blinds" data-collapsed="false" data-collapsible="true")
                 div(class='tile' data-cls-title="title-text bg-black fg-white" data-role="panel" data-draggable="true" data-title-caption="Front" data-collapsed="false" data-collapsible="false")
                     form(name='previous', action='/actuators/blinds', method='post')
                         input(type="hidden", name='id', hidden='true' value="1")
