@@ -1,8 +1,13 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+.tile{
+    max-width:30vh;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    margin-right: 2vh;
+    margin-left: 2vh;
 }
 
-a {
-  color: #00B7FF;
+.title-text {
+    font-size: x-large;
+    font-weight: bolder;
 }

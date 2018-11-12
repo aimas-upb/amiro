@@ -1,24 +1,39 @@
+extends layout
+
 block content
-    h1= title
-    p Blinds 1
-        form(name='previous', action='/actuators/blinds', method='post')
-            input(type="hidden", name='id', hidden='true' value="1")
-            input(type="submit" name='command' value="1")
-        form(name='next', action='/actuators/blinds', method='post')
-            input(type="hidden", name='id', hidden='true' value="1")
-            input(type="submit" name='command' value="0")
-        form(name='next', action='/actuators/blinds', method='post')
-            input(type="hidden", name='id', hidden='true' value="1")
-            input(type="submit" name='command' value="-1")
-    p Blinds 2
-        form(name='previous', action='/actuators/blinds', method='post')
-            input(type="hidden", name='id', hidden='true' value="1")
-            input(type="submit" name='command' value="1")
-        form(name='next', action='/actuators/blinds', method='post')
-            input(type="hidden", name='id', hidden='true' value="1")
-            input(type="submit" name='command' value="0")
-        form(name='next', action='/actuators/blinds', method='post')
-            input(type="hidden", name='id', hidden='true' value="1")
-            input(type="submit" name='command' value="-1")
+
+    h1= Control
+        div(class='grid')
+            div(class='tile' data-cls-title="title-text bg-black fg-white" data-role="panel" data-draggable="false" data-title-caption="Blinds" data-collapsed="false" data-collapsible="false")
+                div(class='tile' data-cls-title="title-text bg-black fg-white" data-role="panel" data-draggable="true" data-title-caption="Front" data-collapsed="false" data-collapsible="false")
+                    form(name='previous', action='/actuators/blinds', method='post')
+                        input(type="hidden", name='id', hidden='true' value="1")
+                        button(class="w-100 button info large" type="submit" name='command' value="1")
+                            i(class="fas fa-caret-up")
+                    form(name='next', action='/actuators/blinds', method='post')
+                        input(type="hidden", name='id', hidden='true' value="1")
+                        button(class="w-100 button alert large" type="submit" name='command' value="0")
+                            i(class="far fa-stop-circle")
+                    form(name='next', action='/actuators/blinds', method='post')
+                        input(type="hidden", name='id', hidden='true' value="1")
+                        button(class="w-100 button info large" type="submit" name='command' value="-1")
+                            i(class="fas fa-caret-down")
+                div(class='tile' data-cls-title="title-text bg-black fg-white" data-role="panel" data-draggable="true" data-title-caption="Side" data-collapsed="false" data-collapsible="false")
+                    form(name='previous', action='/actuators/blinds', method='post')
+                        input(type="hidden", name='id', hidden='true' value="2")
+                        button(class="w-100 button info large" type="submit" name='command' value="1")
+                            i(class="fas fa-caret-up")
+                    form(name='next', action='/actuators/blinds', method='post')
+                        input(type="hidden", name='id', hidden='true' value="2")
+                        button(class="w-100 button alert large" type="submit" name='command' value="0")
+                            i(class="far fa-stop-circle")
+                    form(name='next', action='/actuators/blinds', method='post')
+                        input(type="hidden", name='id', hidden='true' value="2")
+                        button(class="w-100 button info large" type="submit" name='command' value="-1")
+                            i(class="fas fa-caret-down")
+
+
+
+
 
 
