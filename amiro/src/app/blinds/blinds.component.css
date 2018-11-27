@@ -1,0 +1,20 @@
+.tile{
+    max-width:100%;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    margin-right: 2vh;
+    margin-left: 2vh;
+}
+
+.title-text {
+    font-size: x-large;
+    font-weight: bolder;
+}
+
+.tile-visible {
+    visibility: visible;
+}
+
+.tile-hidden {
+    visibility: hidden!important;
+}

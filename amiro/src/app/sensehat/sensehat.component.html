@@ -1,0 +1,13 @@
+<div class='grid'>
+  <div data-cls-title="title-text bg-black fg-white" data-role="panel" data-draggable="false" data-title-caption="Sense Hat" data-collapsed="false" data-collapsible="true">
+    <div class='tile' [hidden]='!temperature.valid' data-cls-title="title-text bg-black fg-white" data-role="panel" data-draggable="true" data-title-caption="Temperature" data-collapsed="false" data-collapsible="false">
+      <p>{{temperature.value}} {{temperature.unit}}</p>
+    </div>
+    <div class='tile' [hidden]='!humidity.valid' data-cls-title="title-text bg-black fg-white" data-role="panel" data-draggable="true" data-title-caption="Humidity" data-collapsed="false" data-collapsible="false">
+      <p>{{humidity.value}} {{humidity.unit}}</p>
+    </div>
+    <div class='tile' [hidden]='!pressure.valid' data-cls-title="title-text bg-black fg-white" data-role="panel" data-draggable="true" data-title-caption="Pressure" data-collapsed="false" data-collapsible="false">
+      <p>{{pressure.value}} {{pressure.unit}}</p>
+    </div>
+  </div>
+</div>
