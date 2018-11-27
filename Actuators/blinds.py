@@ -20,14 +20,13 @@ class BlindsNode:
 
 	def on_blinds_msg(self, data):
 		rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+		GPIO.output(self.gpio_up, 1);
+		GPIO.output(self.gpio_down, 1);
 
 		if data.data == -1:
 			GPIO.output(self.gpio_down, 0)
 		elif data.data == 1:
 			GPIO.output(self.gpio_up, 0)
-		else:
-			GPIO.output(self.gpio_down, 1)
-			GPIO.output(self.gpio_up, 1)
 
 with open('blinds_config.json') as json_data_file:
 	gpio_config = json.load(json_data_file)

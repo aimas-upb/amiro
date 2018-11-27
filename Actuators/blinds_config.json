@@ -1,10 +1,10 @@
 {
   "blinds_1": {
-    "up" : 13,
-    "down": 6
+    "up" : 6,
+    "down": 13
   },
   "blinds_2": {
-    "up" : 26,
-    "down": 19
+    "up" : 19,
+    "down": 26
   }
 }
