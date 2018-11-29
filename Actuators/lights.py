@@ -7,7 +7,7 @@ class LightsNode:
 	def __init__(self, topic_name, token):
 		self.token = "cde2e632edf55ac47e444523e12fb7807d6aaf51246f90f5cf6aa4be74efbad7"
         self.topic_name = topic_name
-        self.headers {
+        self.headers = {
             "Authorization": "Bearer %s" % token,
         }
 
