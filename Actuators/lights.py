@@ -22,7 +22,7 @@ class LightsNode:
 
 
 with open('lights_config.json') as json_data_file:
-	lights_config = json.load(json_data_file)
+    lights_config = json.load(json_data_file)
 
 	for key in lights_config:
 		bnode = LightsNode(key, lights_config[key]['token'])
