@@ -24,8 +24,8 @@ rospy.spin()
 with open('lights_config.json') as json_data_file:
 	lights_config = json.load(json_data_file)
 
-for key in lights_config:
-	bnode = LightsNode(key, light['token'])
-	bnode.listen()
+    for key in lights_config:
+        bnode = LightsNode(key, light['token'])
+        bnode.listen()
 
-rospy.spin()
+    rospy.spin()
