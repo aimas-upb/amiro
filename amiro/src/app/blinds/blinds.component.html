@@ -1,24 +1,24 @@
 <div class='grid'>
   <div data-cls-title="title-text bg-black fg-white" data-role="panel" data-draggable="false" data-title-caption="Blinds" data-collapsed="false" data-collapsible="true">
     <div class='tile' [hidden]='!frontBlinds.enabled' data-cls-title="title-text bg-black fg-white" data-role="panel" data-draggable="true" data-title-caption="Front" data-collapsed="false" data-collapsible="false">
-      <button (click)="raise(1)" class="w-100 button info large" type="submit" name='command' value="1">
+      <button (click)="raise(frontBlinds)" class="w-100 button info large" type="submit" name='command' value="1">
           <i class="fas fa-caret-up"></i>
       </button>
-      <button (click)="stop(1)" class="w-100 button alert large" type="submit" name='command' value="0">
+      <button (click)="stop(frontBlinds)" class="w-100 button alert large" type="submit" name='command' value="0">
           <i class="fas fa-stop"></i>
       </button>
-      <button (click)="lower(1)" class="w-100 button info large" type="submit" name='command' value="-1">
+      <button (click)="lower(frontBlinds)" class="w-100 button info large" type="submit" name='command' value="-1">
           <i class="fas fa-caret-down"></i>
       </button>
     </div>
     <div class='tile' [hidden]='!sideBlinds.enabled' data-cls-title="title-text bg-black fg-white" data-role="panel" data-draggable="true" data-title-caption="Side" data-collapsed="false" data-collapsible="false">
-      <button (click)="raise(2)" class="w-100 button info large" type="submit" name='command' value="1">
+      <button (click)="raise(sideBlinds)" class="w-100 button info large" type="submit" name='command' value="1">
         <i class="fas fa-caret-up"></i>
       </button>
-      <button (click)="stop(2)" class="w-100 button alert large" type="submit" name='command' value="0">
+      <button (click)="stop(sideBlinds)" class="w-100 button alert large" type="submit" name='command' value="0">
           <i class="fas fa-stop"></i>
       </button>
-      <button (click)="lower(2)" class="w-100 button info large" type="submit" name='command' value="-1">
+      <button (click)="lower(sideBlinds)" class="w-100 button info large" type="submit" name='command' value="-1">
           <i class="fas fa-caret-down"></i>
       </button>
     </div>

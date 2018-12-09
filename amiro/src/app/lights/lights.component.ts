@@ -19,14 +19,7 @@ export class LightsComponent implements OnInit {
   }
 
   constructor(private http: HttpClient) { 
-    var light1 = this.get_light_state();
-    console.log(light1);
-    this.light = {
-      state : light1['state']['on'].toBool(),
-      brightness: light1['state']['bri'].toInt(),
-      hue: 0,
-      saturation: 0
-    };
+   
   }
 
   ngOnInit() {

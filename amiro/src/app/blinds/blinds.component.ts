@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NONE_TYPE } from '@angular/compiler/src/output/output_ast';
+import { AppComponent } from '../app.component';
+
+declare var ros: any;
+
 @Component({
   selector: 'app-blinds',
   templateUrl: './blinds.component.html',
@@ -10,29 +14,42 @@ export class BlindsComponent implements OnInit {
   frontBlinds = {name : 'Front', enabled: true};
   rosnode = null;
 
-  stop(idx)
+  stop(blinds)
   {
-    console.log("Stopped " + idx);
+    if('topic' in blinds)
+    {
+      console.log("Stopped ");
+      blinds.topic.publish(0);
+    }
   }
   
-  raise(idx)
+  raise(blinds)
   {
-    console.log("Raised " + idx);
+    console.log("Raised " + blinds);
+    blinds.topic.publish(1);
   }
 
-  lower(idx)
+  lower(blinds)
   {
-    console.log("Lowered " + idx);
+    console.log("Lowered " + blinds);
+    blinds.topic.publish(-1);
   }
 
   constructor() { 
     try{
-      
-      //this.rosnode.initNode('/blinds_node');
+      this.sideBlinds['topic'] = AppComponent.get_topic({
+        ros : AppComponent.ros,
+        name : '/blinds_1',
+        messageType : 'std_msgs/Int32'
+      });
+      this.frontBlinds['topic'] = AppComponent.get_topic({
+        ros : AppComponent.ros,
+        name : '/blinds_2',
+        messageType : 'std_msgs/Int32'
+      });
     }
     catch(err)
     {
-      console.log(err);
     }
   }
 
