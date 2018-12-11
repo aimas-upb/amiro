@@ -11,7 +11,7 @@ export class AppComponent {
   title = 'AMIRO';
   public static ros_lib = ROSLIB;
   public static ros = new ROSLIB.Ros({
-    url : 'ws://localhost:9090'
+    url : 'ws://192.168.0.158:9090'
   });
   public static ros_connected = false;
 
