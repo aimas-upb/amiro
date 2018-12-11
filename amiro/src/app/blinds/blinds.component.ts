@@ -19,20 +19,20 @@ export class BlindsComponent implements OnInit {
     if('topic' in blinds)
     {
       console.log("Stopped ");
-      blinds.topic.publish(0);
+      blinds.topic.publish({data: 0});
     }
   }
   
   raise(blinds)
   {
     console.log("Raised " + blinds);
-    blinds.topic.publish(1);
+    blinds.topic.publish({data: 1});
   }
 
   lower(blinds)
   {
     console.log("Lowered " + blinds);
-    blinds.topic.publish(-1);
+    blinds.topic.publish({data: -1});
   }
 
   constructor() { 
