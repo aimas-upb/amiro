@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { BlindsComponent } from './blinds/blinds.component';
 import { SensehatComponent } from './sensehat/sensehat.component';
 import { LightsComponent } from './lights/lights.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,9 +18,10 @@ import { LightsComponent } from './lights/lights.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule
-    
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
