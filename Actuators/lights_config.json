@@ -1,6 +1,18 @@
 {
   "lights_1": {
-	"step": 0.25,
-  	"token": "cde2e632edf55ac47e444523e12fb7807d6aaf51246f90f5cf6aa4be74efbad7"
+	"step": 85,
+  	"token": "cde2e632edf55ac47e444523e12fb7807d6aaf51246f90f5cf6aa4be74efbad7",
+	"colors": {
+		"red": {"hue":65349, "sat": 254},
+		"blue": {"hue":45900, "sat":251},
+		"green": {"hue":28239, "sat":254},
+		"orange": {"hue":13231, "sat":254},
+		"white": {"hue":0, "sat":0},
+		"yellow": {"hue": 19220, "sat":254},
+		"purple": {"hue": 47734, "sat": 240},
+		"pink": {"hue":54612, "sat": 254},
+		"cyan": {"hue":42346, "sat":252}
+	}
   }
 }
+
