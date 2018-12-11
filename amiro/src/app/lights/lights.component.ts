@@ -7,7 +7,6 @@ import { AppComponent } from '../app.component';
   styleUrls: ['./lights.component.css']
 })
 export class LightsComponent implements OnInit {
-  public selected_color = "";
   public light = {type:'phillips_hue', enabled: true};
 
   public colors = [{value:'Red', selected: false},
@@ -18,12 +17,19 @@ export class LightsComponent implements OnInit {
                     {value:'Purple', selected: false},
                     {value:'Pink', selected: false},
                     {value:'Cyan', selected: false}];
+  public selectedColor = this.colors[0];
                     
   get_light_state()
   {
     
   }
-  
+
+  oncolorchanged(color)
+  {
+    console.log(color);
+    this.selectedColor = color;
+  }
+
   set_brightness(val, light)
   {
     var payload = {data: JSON.stringify({'brightness': val})};
@@ -33,7 +39,8 @@ export class LightsComponent implements OnInit {
   set_color(val, light)
   {
     console.log(val);
-    var payload = {data: JSON.stringify({'color': val.toLowerCase()})};
+    console.log(this.selectedColor);
+    var payload = {data: JSON.stringify({'color': val.value.toLowerCase()})};
     light.topic.publish(payload);
   }
 
