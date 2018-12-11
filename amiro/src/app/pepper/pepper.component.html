@@ -1,0 +1,14 @@
+<div class='grid'>
+  <div data-cls-title="title-text bg-black fg-white" data-role="panel" data-draggable="false" data-title-caption="Pepper" data-collapsed="false" data-collapsible="true">
+    <div class='row'>
+      <div class='cell-7 offset-1'>
+          <input type="text" data-history="true" data-role="input" data-prepend="Tell Pepper: " [(ngModel)]="currentTextCommand">
+      </div>
+      <div class='cell-2'>
+          <button (click)="sendTextCommand(pepper)" class="w-100 button info" type="submit" name='command' value="0">
+              <i class="far fa-envelope"></i>
+          </button>
+      </div>
+    </div>
+  </div>
+</div>

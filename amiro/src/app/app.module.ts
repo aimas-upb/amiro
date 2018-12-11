@@ -8,6 +8,7 @@ import { BlindsComponent } from './blinds/blinds.component';
 import { SensehatComponent } from './sensehat/sensehat.component';
 import { LightsComponent } from './lights/lights.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PepperComponent } from './pepper/pepper.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BlindsComponent,
     SensehatComponent,
     LightsComponent,
+    PepperComponent,
   ],
   imports: [
     BrowserModule,

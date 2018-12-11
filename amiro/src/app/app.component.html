@@ -3,8 +3,20 @@
   <h1>
     Welcome to {{ title }}!
   </h1>
-  <app-blinds></app-blinds>
-  <app-sensehat></app-sensehat>
-  <app-lights></app-lights>
-</div>
+  <app-pepper></app-pepper>
+  <div class='grid'>
+    <div data-cls-title="title-text bg-black fg-white" data-role="panel" data-draggable="true" data-title-caption="Environment" data-collapsed="false" data-collapsible="true">
+      <div class="row">
+        <div class='tile cell-md-3' data-cls-title="title-text bg-black fg-white" data-role="panel" data-draggable="true" data-title-caption="Blinds" data-collapsed="false" data-collapsible="false">
+          <app-blinds></app-blinds>
+        </div>
+        <div class='tile cell-md-3' data-cls-title="title-text bg-black fg-white" data-role="panel" data-draggable="true" data-title-caption="Phillips Hue" data-collapsed="false" data-collapsible="false">
+            <app-lights></app-lights>
+        </div>
+        <div class='tile cell-md-3' data-cls-title="title-text bg-black fg-white" data-role="panel" data-draggable="true" data-title-caption="Sense Hat" data-collapsed="false" data-collapsible="false">
+            <app-sensehat></app-sensehat>
+        </div>
+      </div>
+    </div>
+  </div>
 <router-outlet></router-outlet>
