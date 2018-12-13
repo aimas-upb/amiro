@@ -6,9 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sensehat.component.css']
 })
 export class SensehatComponent implements OnInit {
-  temperature = {'unit' : 'C', 'value' : 0, 'valid': false};
-  humidity = {'unit' : '%%rH', 'value' : 0, 'valid': false};
-  pressure =  {'unit' : 'mmHg', 'value' : 0, 'valid': false};
+  temperature = {'unit' : 'C', 'value' : 23, 'valid': true};
+  humidity = {'unit' : '%%rH', 'value' : 65, 'valid': true};
+  pressure =  {'unit' : 'mmHg', 'value' : 760, 'valid': true};
   topic = '';
 
   constructor() { 

@@ -7,14 +7,24 @@ import { AppComponent } from '../app.component';
   styleUrls: ['./pepper.component.css']
 })
 export class PepperComponent implements OnInit {
+  public avaliableLanguages = ['ro-RO', 'en-EN'];
   public currentTextCommand = "";
-  public pepper = {enabled: true};
+  public pepper = {enabled: true, selectedLanguage:'ro-RO'};
+
 
   sendTextCommand(pepper){
     if('topic' in pepper)
     {
-      console.log("Sending " + this.currentTextCommand);
-      pepper.topic.publish(this.currentTextCommand);
+      var stringPayload = JSON.stringify(
+      {
+        'text': this.currentTextCommand,
+        'error': "",
+        'language': pepper.selectedLanguage
+      });
+      console.log(stringPayload);
+
+      var payload = {data: stringPayload};
+      pepper.topic.publish(payload);
       this.currentTextCommand = "";
     }
   }

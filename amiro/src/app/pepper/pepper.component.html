@@ -1,10 +1,15 @@
 <div class='grid'>
   <div data-cls-title="title-text bg-black fg-white" data-role="panel" data-draggable="false" data-title-caption="Pepper" data-collapsed="false" data-collapsible="true">
     <div class='row'>
-      <div class='cell-10 offset-1'>
+      <div class='cell-10'>
           <form (submit)="sendTextCommand(pepper)">
             <input type="text" data-history="true" data-role="input" data-prepend="Tell Pepper: " name="textCommand" [(ngModel)]="currentTextCommand">
           </form>
+      </div>
+      <div class='cell-2'>
+          <select [(ngModel)]="pepper.selectedLanguage">
+              <option *ngFor="let language of avaliableLanguages" [ngValue]='language'>{{language}}</option>
+          </select>
       </div>
     </div>
   </div>
