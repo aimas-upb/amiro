@@ -24,12 +24,13 @@ class BlindsNode:
 		self.availability_service = None
 		self.availability_publisher = None
 
-		self.__setup_availability_services()
+		service_root_name = BlindsNode.ROS_NODE_NAME + "/" + self.topic_name
+		self.__setup_availability_services(service_root_name)
 
 
-	def __setup_availability_services(self):
-		availability_service_name = 	BlindsNode.ROS_NODE_NAME + "_is_available"
-		availability_topic_name = 	BlindsNode.ROS_NODE_NAME + "_availability"
+	def __setup_availability_services(self, service_root_name):
+		availability_service_name = service_root_name + "/is_available"
+		availability_topic_name = 	service_root_name + "/availability"
 
 		# setup the service
 		self.availability_service = \
