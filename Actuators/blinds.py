@@ -42,7 +42,7 @@ class BlindsNode:
 
 
 
-	def is_available(self):
+	def is_available(self, request):
 		return IsAvailableResponse(True)
 
 
