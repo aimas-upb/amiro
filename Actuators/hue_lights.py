@@ -4,6 +4,7 @@ from std_msgs.msg import String
 import json
 from amiro_services.srv import IsAvailable, IsAvailableResponse
 from amiro_services.msg import Availability
+import requests
 
 
 class LightsNode:
@@ -33,8 +34,18 @@ class LightsNode:
 		self.availability_publisher = \
 			rospy.Publisher(availability_topic_name, Availability, queue_size=10)
 
+
+
 	def is_available(self, request):
-		return IsAvailableResponse(True)
+		response = requests.get("https://192.168.0.160/api/eWTU4i2znjgq-rLuYnfk7MhiTC6EU85wb-8Ya2Td/lights/2")
+
+		available = response['state']['reachable']
+		# available = response['1']['state']['reachable']
+		# available = response['lights']['1']['state']['reachable']
+
+		return IsAvailableResponse(available)
+
+
 
 	def announce_available(self):
 		msg = Availability()
