@@ -9,13 +9,14 @@ import requests
 
 class LightsNode:
 	ROS_NODE_NAME = "rpi_1"
+	RESERVED_IP = "192.168.0.155"
 
 	def __init__(self, topic_name, token, step, colors, light_id = 2):
 		self.token = "eWTU4i2znjgq-rLuYnfk7MhiTC6EU85wb-8Ya2Td"
 		self.light_id = str(light_id)
 		self.topic_name = topic_name
 		self.step = step
-		self.url = "https://192.168.0.155/api/" + self.token + "/lights"
+		self.url = "https://" + LightsNode.RESERVED_IP + "/api/" + self.token + "/lights"
 		self.colors = colors
 		rospy.init_node('rpi_1', anonymous=True)
 
@@ -37,7 +38,7 @@ class LightsNode:
 
 
 	def is_available(self, request):
-		response = requests.get("https://192.168.0.160/api/eWTU4i2znjgq-rLuYnfk7MhiTC6EU85wb-8Ya2Td/lights/2")
+		response = requests.get("https://" + LightsNode.RESERVED_IP + "/api/" + self.token + "/lights/2")
 
 		available = response['state']['reachable']
 		# available = response['1']['state']['reachable']
