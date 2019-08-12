@@ -9,7 +9,7 @@ class LightsNode:
 		self.light_id = str(light_id)
 	        self.topic_name = topic_name
 		self.step = step
-		self.url = "https://192.168.0.160/api/" + self.token + "/lights"
+		self.url = "https://192.168.0.155/api/" + self.token + "/lights"
 		self.colors = colors
 		rospy.init_node('rpi_1', anonymous=True)
 
