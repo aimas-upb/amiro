@@ -38,9 +38,9 @@ class LightsNode:
 
 
 	def is_available(self, request):
-		response = requests.get("https://" + LightsNode.RESERVED_IP + "/api/" + self.token + "/lights/2")
+		response = requests.get("http://" + LightsNode.RESERVED_IP + "/api/" + self.token + "/lights/2")
 
-		available = response['state']['reachable']
+		available = response.json()['state']['reachable']
 		# available = response['1']['state']['reachable']
 		# available = response['lights']['1']['state']['reachable']
 
