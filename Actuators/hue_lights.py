@@ -37,11 +37,13 @@ class LightsNode:
             rospy.Publisher(availability_topic_name, Availability, queue_size=10)
 
     def is_available(self, request):
-        response = requests.get("https://192.168.0.160/api/eWTU4i2znjgq-rLuYnfk7MhiTC6EU85wb-8Ya2Td/lights/2")
+		response = requests.get("http://" + LightsNode.RESERVED_IP + "/api/" + self.token + "/lights/2")
 
-        available = response['state']['reachable']
+		available = response.json()['state']['reachable']
+		# available = response['1']['state']['reachable']
+		# available = response['lights']['1']['state']['reachable']
 
-        return IsAvailableResponse(available)
+		return IsAvailableResponse(available)
 
     def announce_available(self):
         msg = Availability()
