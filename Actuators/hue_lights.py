@@ -5,94 +5,103 @@ import json
 from amiro_services.srv import IsAvailable, IsAvailableResponse
 from amiro_services.msg import Availability
 import requests
+import threading
+import threading
 
 
 class LightsNode:
-	ROS_NODE_NAME = "rpi_1"
+    ROS_NODE_NAME = "rpi_1"
 
-	def __init__(self, topic_name, token, step, colors, light_id = 2):
-		self.token = "eWTU4i2znjgq-rLuYnfk7MhiTC6EU85wb-8Ya2Td"
-		self.light_id = str(light_id)
-		self.topic_name = topic_name
-		self.step = step
-		self.url = "https://192.168.0.160/api/" + self.token + "/lights"
-		self.colors = colors
-		rospy.init_node('rpi_1', anonymous=True)
+    def __init__(self, topic_name, token, step, colors, light_id=2):
+        self.token = "eWTU4i2znjgq-rLuYnfk7MhiTC6EU85wb-8Ya2Td"
+        self.light_id = str(light_id)
+        self.topic_name = topic_name
+        self.step = step
+        self.url = "https://192.168.0.160/api/" + self.token + "/lights"
+        self.colors = colors
+        rospy.init_node('rpi_1', anonymous=True)
 
-		service_root_name = LightsNode.ROS_NODE_NAME + "/" + self.topic_name
-		self.__setup_availability_services(service_root_name)
+        service_root_name = LightsNode.ROS_NODE_NAME + "/" + self.topic_name
+        self.__setup_availability_services(service_root_name)
 
-	def __setup_availability_services(self, service_root_name):
-		availability_service_name = service_root_name + "/is_available"
-		availability_topic_name = service_root_name + "/availability"
+    def __setup_availability_services(self, service_root_name):
+        availability_service_name = service_root_name + "/is_available"
+        availability_topic_name = service_root_name + "/availability"
 
-		# setup the service
-		self.availability_service = \
-			rospy.Service(availability_service_name, IsAvailable, self.is_available)
+        # setup the service
+        self.availability_service = \
+            rospy.Service(availability_service_name, IsAvailable, self.is_available)
 
-		# setup the publisher
-		self.availability_publisher = \
-			rospy.Publisher(availability_topic_name, Availability, queue_size=10)
+        # setup the publisher
+        self.availability_publisher = \
+            rospy.Publisher(availability_topic_name, Availability, queue_size=10)
 
+    def is_available(self, request):
+        response = requests.get("https://192.168.0.160/api/eWTU4i2znjgq-rLuYnfk7MhiTC6EU85wb-8Ya2Td/lights/2")
 
+        available = response['state']['reachable']
 
-	def is_available(self, request):
-		response = requests.get("https://192.168.0.160/api/eWTU4i2znjgq-rLuYnfk7MhiTC6EU85wb-8Ya2Td/lights/2")
+        return IsAvailableResponse(available)
 
-		available = response['state']['reachable']
-		# available = response['1']['state']['reachable']
-		# available = response['lights']['1']['state']['reachable']
+    def announce_available(self):
+        msg = Availability()
+        msg.is_available = True
 
-		return IsAvailableResponse(available)
+        if self.availability_publisher:
+            self.availability_publisher.publish(msg)
 
+    """
+    def listen(self):
+        rospy.Subscriber(self.topic_name, String, self.on_lights_msg)
+    """
 
+    def listen(self):
+        while True:
+            topics = subprocess.check_output(['rostopic', 'list']).decode('ascii').split('\n')
+            if '/{}'.format(self.topic_name) not in topics:
+                rospy.Subscriber(self.topic_name, Int32, self.on_blinds_msg)
 
-	def announce_available(self):
-		msg = Availability()
-		msg.is_available = True
+            time.sleep(1)
 
-		if self.availability_publisher:
-			self.availability_publisher.publish(msg)
+    def on_lights_msg(self, data):
+        print(data.data)
+        rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+        payload = json.loads(data.data)
+        if 'brightness' in payload:
+            response = requests.get(self.url, verify=False)
+            print(response.json())
+            payload['bri'] = min(254,
+                                 max(response.json()[self.light_id]['state']['bri'] + payload['brightness'] * self.step,
+                                     0))
+            del payload['brightness']
 
+        if ('power' in payload):
+            if payload['power'] == 'off':
+                payload['on'] = False
+            else:
+                payload['on'] = True
+            del payload['power']
 
-	def listen(self):
-		rospy.Subscriber(self.topic_name, String, self.on_lights_msg)
+        if ('color' in payload):
+            if payload['color'] in self.colors:
+                payload = self.colors[payload['color']]
+        print(payload)
 
-	def on_lights_msg(self, data):
-		print(data.data)
-		rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
-		payload = json.loads(data.data)
-		if 'brightness' in payload:
-			response = requests.get(self.url, verify=False)
-			print(response.json())
-			payload['bri'] = min(254, max(response.json()[self.light_id]['state']['bri'] + payload['brightness'] * self.step, 0))
-			del payload['brightness']
-
-		if('power' in payload):
-			if payload['power'] == 'off':
-				payload['on'] = False
-			else:
-				payload['on'] = True
-			del payload['power']
-
-		if('color' in payload):
-			if payload['color'] in self.colors:
-				payload = self.colors[payload['color']]
-		print(payload)
-
-		response = requests.put(self.url + '/' + self.light_id + '/state', data=json.dumps(payload), verify=False)
-		print(self.url + '/' + self.light_id + '/state')
-		print(response)
+        response = requests.put(self.url + '/' + self.light_id + '/state', data=json.dumps(payload), verify=False)
+        print(self.url + '/' + self.light_id + '/state')
+        print(response)
 
 
 with open('lights_config.json') as json_data_file:
-	lights_config = json.load(json_data_file)
+    lights_config = json.load(json_data_file)
 
-	for key in lights_config:
-		bnode = LightsNode(key, lights_config[key]['token'], lights_config[key]['step'], lights_config[key]['colors'])
-		bnode.announce_available()
-		bnode.listen()
+    for key in lights_config:
+        bnode = LightsNode(key, lights_config[key]['token'], lights_config[key]['step'], lights_config[key]['colors'])
+        bnode.announce_available()
+        # bnode.listen()
+        listen_thread = threading.Thread(target=bnode.listen)
+        listen_thread.start()
 
-	rospy.spin()
-#payload  = {'hue': 20000}
-#response = requests.put("https://192.168.0.160/api/eWTU4i2znjgq-rLuYnfk7MhiTC6EU85wb-8Ya2Td/lights/2/state", data=json.dumps(payload), verify=False)
+    rospy.spin()
+# payload  = {'hue': 20000}
+# response = requests.put("https://192.168.0.160/api/eWTU4i2znjgq-rLuYnfk7MhiTC6EU85wb-8Ya2Td/lights/2/state", data=json.dumps(payload), verify=False)
